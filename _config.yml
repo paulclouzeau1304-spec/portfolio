@@ -7,3 +7,4 @@ collections: {projets: {output: true, permalink: "/projets/:name/"}}
 defaults: [{scope: {path: "", type: projets}, values: {layout: projet}}]
 exclude: [README.md, LICENSE]
 future: true
+title: "Paul Clouzeau"
