@@ -1,8 +1,8 @@
 ---
-title: "Réseau multisite : routage statique et filtrage par ACL"
+title: "Réseau multisite : routage statique, ACL et VPN IPsec"
 date: 2026-05-01
 cadre: "Projet de Bac Pro CIEL"
-resume: "Interconnexion de quatre réseaux par trois routeurs Cisco, avec routes statiques et listes de contrôle d'accès qui protègent le réseau du support technique."
+resume: "Interconnexion de quatre réseaux par trois routeurs Cisco, avec routes statiques, listes de contrôle d'accès qui protègent le support technique, et tunnels VPN IPsec entre les sites."
 competences: [c1, c5]
 ---
 
@@ -56,6 +56,27 @@ interface GigabitEthernet0/0
 
 **6. Montage sur matériel physique** et présentation du réseau à l'oral.
 
+**7. Chiffrement par VPN IPsec.** Trois tunnels site à site (Router0–Router1, Router1–Router2, Router0–Router2) chiffrent le trafic entre les réseaux locaux. Sur chaque routeur : une politique ISAKMP (AES 256, clé partagée, groupe Diffie-Hellman 5), un transform-set ESP AES 256 avec SHA-HMAC, une ACL qui désigne le trafic à chiffrer, et une crypto map appliquée sur l'interface WAN. Par exemple sur Router2, pour le tunnel vers Router0 (clé masquée) :
+
+```
+license boot module c2900 technology-package securityk9
+crypto isakmp policy 10
+ encr aes 256
+ authentication pre-share
+ group 5
+crypto isakmp key **** address 10.0.0.1
+crypto ipsec transform-set TS-VPN esp-aes 256 esp-sha-hmac
+access-list 120 permit ip 192.168.1.128 0.0.0.127 192.168.1.0 0.0.0.63
+crypto map MAP-VPN 10 ipsec-isakmp
+ set peer 10.0.0.1
+ set transform-set TS-VPN
+ match address 120
+interface GigabitEthernet0/0
+ crypto map MAP-VPN
+```
+
+L'ACL de chiffrement d'un routeur est le miroir de celle du routeur en face : sur Router0, l'ACL 110 désigne le trafic de 192.168.1.0/26 vers 192.168.1.128/25.
+
 ## Productions et preuves
 
 ![Topologie du réseau dans Packet Tracer : trois routeurs, quatre commutateurs et cinq postes]({{ "/images/reseau-topologie.png" | relative_url }})
@@ -71,6 +92,21 @@ interface GigabitEthernet0/0
 | PC0 vers PC13 (192.168.1.138) | Bloqué : l'ACL 101 de Router0 refuse le paquet, et Router0 (192.168.1.1) répond « Destination host unreachable » |
 
 Les premiers paquets perdus (« Request timed out ») ne sont pas une panne : pendant ce temps, les postes et les routeurs résolvent les adresses MAC avec le protocole ARP. Dès que c'est fait, toutes les réponses arrivent.
+
+**Vérification du VPN**
+
+![Router2 : show crypto isakmp sa montre le tunnel vers Router0 à l'état QM_IDLE, et show crypto ipsec sa compte les paquets chiffrés et déchiffrés]({{ "/images/reseau-vpn-router2.png" | relative_url }})
+
+![Pings de PC13 vers PC0 à travers le VPN : les premiers paquets se perdent pendant la négociation du tunnel, puis 4 réponses sur 4]({{ "/images/reseau-vpn-ping-pc13.png" | relative_url }})
+
+| Contrôle | Résultat obtenu |
+|---|---|
+| `show crypto isakmp sa` sur Router2 | Tunnel 10.0.0.6 vers 10.0.0.1 à l'état QM_IDLE, ACTIVE |
+| `show crypto ipsec sa` sur Router2 | 6 paquets chiffrés (encaps), 5 déchiffrés (decaps) |
+| `show crypto ipsec sa` sur Router1 | Tunnel vers Router0 : 3 paquets chiffrés, 3 déchiffrés |
+| PC13 vers PC0, puis PC2 vers PC0 | Réussis après la négociation du tunnel |
+
+Le TTL des réponses passe de 125 sans VPN à 126 avec le VPN : le paquet d'origine traverse Router1 à l'intérieur du tunnel, donc Router1 ne le compte plus comme un saut.
 
 ## Ce que j'en retiens
 
