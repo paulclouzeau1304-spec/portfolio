@@ -1,15 +1,19 @@
 ---
 layout: default
 ---
-<article>
+<article class="fiche-projet">
+  <p class="retour"><a href="{{ '/' | relative_url }}#projets">Tous les projets</a></p>
   <h1>{{ page.title }}</h1>
-  <p class="sous-titre">{{ page.date | date: "%m/%Y" }} · {{ page.cadre }}</p>
+  <p class="sous-titre"><time datetime="{{ page.date | date: '%Y-%m' }}">{{ page.date | date: "%m/%Y" }}</time>, {{ page.cadre }}</p>
 
-  <p class="comp-liste">Compétences :
-  {% for c in page.competences %}{% assign comp = site.data.competences | where: "code", c | first %}<span class="comp">{{ comp.libelle }}</span>{% endfor %}
-  </p>
+  {% if page.competences.size > 0 %}
+  <h2 class="visuellement-cache">Compétences mobilisées</h2>
+  <ul class="etiquettes">
+  {% for c in page.competences %}{% assign comp = site.data.competences | where: "code", c | first %}<li>{{ comp.libelle }}</li>{% endfor %}
+  </ul>
+  {% endif %}
 
   {{ content }}
 
-  <p><a href="{{ '/' | relative_url }}#projets">Retour aux projets</a></p>
+  <p class="retour"><a href="{{ '/' | relative_url }}#projets">Tous les projets</a></p>
 </article>

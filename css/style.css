@@ -1,45 +1,310 @@
-/* Mise en forme du portfolio. Changez la couleur --accent pour donner
-   votre teinte au site ; le reste suit. */
+/* Portfolio de Paul Clouzeau.
+   Thème : le câblage réseau. La bande en haut de page reprend l'ordre
+   des huit fils d'une prise RJ45 en norme T568B, et le tableau des
+   compétences est dessiné comme un panneau de brassage.
+   Aucune police ni ressource externe : rien n'est chargé hors du site. */
+
 :root {
-  --encre: #1d2630;
-  --accent: #0a5c8c;
-  --fond: #fbfbf9;
-  --trait: #d5dbe1;
-  --doux: #5b6672;
+  --fond: #eef1f4;
+  --papier: #ffffff;
+  --encre: #17212b;
+  --acier: #4f5c69;
+  --trait: #cfd6dd;
+  --bleu: #1b5ea8;
+  --bleu-fonce: #134a87;
+  --orange: #c75b12;
+  --vert: #2c8048;
+  --brun: #7a5230;
+  --baie: #1f2933;
+  --baie-texte: #dfe6ec;
+
+  --titre: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Arial Narrow", sans-serif;
+  --texte: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --code: Consolas, "Cascadia Mono", Menlo, "Liberation Mono", monospace;
+
+  --colonne: 52rem;
 }
+
 * { box-sizing: border-box; }
+
+html { scroll-padding-top: 1rem; }
+
 body {
   margin: 0;
   background: var(--fond);
   color: var(--encre);
-  font: 17px/1.6 Georgia, "Times New Roman", serif;
+  font: 1.0625rem/1.65 var(--texte);
 }
-header, main, footer { max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
-header { padding-top: 1.6rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .5rem 1.5rem; }
-.site { margin: 0; font: bold 1.05rem Calibri, Arial, sans-serif; }
+
+/* Bande T568B : blanc-orange, orange, blanc-vert, bleu,
+   blanc-bleu, vert, blanc-brun, brun. */
+.cable { display: flex; height: .55rem; }
+.cable span { flex: 1; }
+.cable span:nth-child(1) { background: repeating-linear-gradient(135deg, #fff 0 6px, var(--orange) 6px 10px); }
+.cable span:nth-child(2) { background: var(--orange); }
+.cable span:nth-child(3) { background: repeating-linear-gradient(135deg, #fff 0 6px, var(--vert) 6px 10px); }
+.cable span:nth-child(4) { background: var(--bleu); }
+.cable span:nth-child(5) { background: repeating-linear-gradient(135deg, #fff 0 6px, var(--bleu) 6px 10px); }
+.cable span:nth-child(6) { background: var(--vert); }
+.cable span:nth-child(7) { background: repeating-linear-gradient(135deg, #fff 0 6px, var(--brun) 6px 10px); }
+.cable span:nth-child(8) { background: var(--brun); }
+
+.entete, main, .pied {
+  max-width: var(--colonne);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* En-tête */
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem 2rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+}
+.site { margin: 0; font: 600 1.05rem/1.2 var(--titre); }
 .site a { color: var(--encre); text-decoration: none; }
-nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; font-family: Calibri, Arial, sans-serif; }
-h1, h2, h3 { font-family: Calibri, Arial, sans-serif; line-height: 1.25; }
-h1 { font-size: 2rem; margin: 2rem 0 0; }
-h2 { font-size: 1.35rem; margin-top: 2.2rem; border-bottom: 1px solid var(--trait); padding-bottom: .3rem; }
-a { color: var(--accent); }
-a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.sous-titre, .meta { color: var(--doux); margin: .3rem 0 0; }
-.meta { font-size: .85rem; }
-.carte { border: 1px solid var(--trait); background: #fff; padding: .8rem 1rem; margin: 1rem 0; }
-.carte h3 { margin: 0 0 .2rem; }
-.carte p { margin: .2rem 0; }
-.comp-liste { font-size: .9rem; }
-.comp { display: inline-block; border: 1px solid var(--trait); padding: 0 .4rem; margin: .15rem .3rem .15rem 0; background: #fff; }
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.4rem;
+  font-family: var(--titre);
+}
+nav a { color: var(--acier); text-decoration: none; padding: .2rem 0; }
+nav a:hover { color: var(--bleu); text-decoration: underline; text-underline-offset: .3em; }
+
+/* Titres */
+h1, h2, h3 { font-family: var(--titre); line-height: 1.15; font-weight: 600; }
+h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); letter-spacing: -.01em; margin: 0; font-stretch: 87.5%; }
+h2 { font-size: 1.7rem; margin: 3.5rem 0 1.2rem; display: flex; align-items: center; gap: .8rem; }
+h2::after { content: ""; flex: 1; height: 2px; background: var(--trait); }
+h3 { font-size: 1.2rem; margin: 0 0 .2rem; }
+
+a { color: var(--bleu); text-underline-offset: .2em; }
+a:hover { color: var(--bleu-fonce); }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+p { margin: 0 0 .9rem; }
+.sous-titre { color: var(--acier); font-size: 1.15rem; margin-top: .6rem; max-width: 38rem; }
+.meta { color: var(--acier); font-size: .9rem; margin: .4rem 0 0; }
+
+.evitement { position: absolute; left: -999px; top: .8rem; background: var(--papier); padding: .5rem 1rem; z-index: 1; }
+.evitement:focus { left: 1rem; }
+.visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Ouverture */
+.ouverture { padding: 3rem 0 1rem; }
+
+/* Profil : texte à gauche, fiche à droite */
+.profil { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 2.5rem; align-items: start; }
+.profil h2 { margin-top: 2.5rem; }
+.fiche {
+  margin: 2.5rem 0 0;
+  background: var(--papier);
+  border-top: 4px solid var(--bleu);
+  padding: .4rem 1.2rem;
+  font-size: .95rem;
+}
+.fiche div { padding: .7rem 0; border-bottom: 1px solid var(--trait); }
+.fiche div:last-child { border-bottom: 0; }
+.fiche dt { font-family: var(--titre); color: var(--acier); font-size: .85rem; }
+.fiche dd { margin: .1rem 0 0; overflow-wrap: anywhere; }
+
+/* Parcours : une frise reliée comme un câble */
+.frise { list-style: none; margin: 0; padding: 0; }
+.frise li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  column-gap: 2rem;
+  padding-bottom: 1.6rem;
+}
+.frise li > * { grid-column: 2; }
+.frise .frise-date { grid-column: 1; grid-row: 1 / span 3; text-align: right; font-family: var(--titre); color: var(--acier); margin: 0; padding-top: .1rem; }
+.frise li::before {
+  content: "";
+  position: absolute;
+  left: calc(9.5rem + 1rem - 1px);
+  top: .45rem;
+  bottom: -.45rem;
+  width: 2px;
+  background: var(--trait);
+}
+.frise li:last-child::before { display: none; }
+.frise li::after {
+  content: "";
+  position: absolute;
+  left: calc(9.5rem + 1rem - 6px);
+  top: .4rem;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--bleu);
+  background: var(--fond);
+}
+.frise li:first-child::after { background: var(--bleu); }
+.frise-lieu { color: var(--acier); margin: 0 0 .3rem; }
+.frise li p:last-child { margin-bottom: 0; }
+
+.sous-partie { margin: 1.4rem 0 .8rem; }
+.etiquettes { list-style: none; margin: 0 0 1.5rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.etiquettes li {
+  background: var(--papier);
+  border: 1px solid var(--trait);
+  border-left: 3px solid var(--bleu);
+  padding: .2rem .7rem;
+  font-size: .92rem;
+}
+
+/* Projets */
+.compte {
+  font-size: 1rem;
+  color: var(--papier);
+  background: var(--bleu);
+  padding: .05rem .55rem;
+  border-radius: 1rem;
+}
+.projets { list-style: none; margin: 0; padding: 0; }
+.projet {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1.5rem;
+  background: var(--papier);
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--orange);
+}
+.projet-date { margin: 0; font: 600 1.25rem/1.3 var(--titre); color: var(--acier); }
+.projet h3 { font-size: 1.3rem; margin-bottom: .4rem; }
+.projet h3 a { color: var(--encre); text-decoration: none; }
+.projet h3 a:hover { color: var(--bleu); text-decoration: underline; }
+.projet p { margin-bottom: 0; }
+
+/* Compétences : panneau de brassage */
+.baie {
+  background: var(--baie);
+  color: var(--baie-texte);
+  padding: 1rem 1.2rem;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px #33404d;
+}
 .defile { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: .9rem; }
-th, td { border: 1px solid var(--trait); padding: .4rem .55rem; text-align: left; vertical-align: top; }
-th { background: #eef2f5; font-family: Calibri, Arial, sans-serif; }
-td.case { text-align: center; font-weight: bold; min-width: 2.4rem; }
-img { max-width: 100%; height: auto; border: 1px solid var(--trait); }
-code { font-size: .9em; background: #eef2f5; padding: 0 .25rem; }
-footer { margin-top: 3rem; padding-bottom: 2rem; font-size: .85rem; color: var(--doux); border-top: 1px solid var(--trait); }
-@media (max-width: 520px) {
-  body { font-size: 16px; }
-  h1 { font-size: 1.6rem; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+th, td { padding: .65rem .6rem; text-align: left; vertical-align: middle; border-bottom: 1px solid #33404d; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+thead th { font-family: var(--titre); font-weight: 600; color: #aab6c2; border-bottom: 2px solid #4a5866; }
+thead th a { color: #fff; text-decoration: none; display: inline-block; min-width: 2rem; text-align: center; }
+thead th a:hover { text-decoration: underline; }
+tbody th { font-weight: 400; }
+.baie td.case, .baie thead th + th { text-align: center; width: 4rem; }
+
+.port {
+  display: inline-block;
+  width: 1.7rem;
+  height: 1.4rem;
+  border: 2px solid #5d6c7b;
+  border-radius: 2px;
+  vertical-align: middle;
+  position: relative;
+}
+/* L'encoche de la prise */
+.port::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: .55rem;
+  height: .3rem;
+  margin-left: -.275rem;
+  background: var(--baie);
+  border: 2px solid #5d6c7b;
+  border-bottom: 0;
+}
+.port.actif { background: #3fa365; border-color: #3fa365; }
+.port.actif::before { border-color: #3fa365; }
+.port.actif::after {
+  content: "";
+  position: absolute;
+  top: -.5rem;
+  right: -.45rem;
+  width: .45rem;
+  height: .45rem;
+  border-radius: 50%;
+  background: #f2b33d;
+}
+.port.actif:hover { background: #5cc283; border-color: #5cc283; }
+.port.actif:hover::before { border-color: #5cc283; }
+
+/* Page projet */
+.fiche-projet { padding-top: 2rem; }
+.fiche-projet h1 { font-size: clamp(2rem, 5.5vw, 3.1rem); }
+.fiche-projet .etiquettes { margin-top: 1.2rem; }
+.fiche-projet h2 { font-size: 1.45rem; margin-top: 2.8rem; }
+.retour { font-family: var(--titre); margin: 0 0 1.2rem; }
+.fiche-projet .retour:last-child { margin: 3rem 0 0; }
+
+ol, ul { padding-left: 1.3rem; }
+li { margin-bottom: .3rem; }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  background: var(--papier);
+  border: 1px solid var(--trait);
+  padding: .5rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+code { font: .88em var(--code); background: #e1e7ed; padding: .1rem .3rem; border-radius: 2px; }
+pre {
+  background: var(--baie);
+  color: var(--baie-texte);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  border-left: 4px solid var(--bleu);
+  line-height: 1.5;
+  margin: 0 0 1.4rem;
+}
+pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
+
+.fiche-projet table th, .fiche-projet table td { border: 1px solid var(--trait); }
+.fiche-projet thead th { background: #e1e7ed; color: var(--encre); border-bottom: 2px solid var(--trait); }
+.fiche-projet td { text-align: left; width: auto; }
+.fiche-projet table { background: var(--papier); margin: 0 0 1.4rem; }
+.fiche-projet td:last-child { width: 55%; }
+
+/* Pied de page */
+.pied {
+  margin-top: 5rem;
+  padding-bottom: 2.5rem;
+  color: var(--acier);
+  font-size: .9rem;
+}
+.pied::before { content: ""; display: block; height: 2px; background: var(--trait); margin-bottom: 1.5rem; }
+.pied p { margin: 0 0 .3rem; }
+
+/* Téléphone */
+@media (max-width: 720px) {
+  body { font-size: 1rem; }
+  .profil { grid-template-columns: 1fr; gap: 0; }
+  .fiche { margin-top: .5rem; }
+  .frise li { grid-template-columns: 1fr; padding-left: 1.6rem; }
+  .frise li > *, .frise .frise-date { grid-column: 1; grid-row: auto; text-align: left; }
+  .frise li::before { left: .3rem; }
+  .frise li::after { left: -1px; }
+  .projet { grid-template-columns: 1fr; gap: .3rem; padding: 1.1rem 1.1rem; }
+  h2 { font-size: 1.5rem; margin-top: 2.8rem; }
+  .fiche-projet table { display: block; overflow-x: auto; }
+  .fiche-projet td:last-child { width: auto; min-width: 12rem; }
+}
+
+@media print {
+  .cable, nav, .evitement { display: none; }
+  body { background: #fff; }
 }

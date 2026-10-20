@@ -1,54 +1,104 @@
 ---
 layout: default
 ---
-<h1>{{ site.title }}</h1>
-<p class="sous-titre">{{ site.description }}</p>
-
-<h2>Profil</h2>
-<p>Étudiant en BTS SIO option SISR (solutions d'infrastructure, systèmes et réseaux) en alternance à ENSITECH, je travaille actuellement au support informatique des boutiques Chanel, au rythme de trois jours en entreprise et deux à trois jours à l'école. Avant le BTS, j'ai suivi un baccalauréat professionnel CIEL en alternance, où j'ai pratiqué le câblage, le brassage et l'assemblage de matériel informatique. Je vise un métier d'administrateur systèmes et réseaux.</p>
-
-<h2>Parcours</h2>
-
-<h3>Expériences</h3>
-<ul>
-  <li><strong>Support informatique, alternance</strong> · Chanel, boutiques · depuis 09/2026<br>Assistance informatique aux équipes des boutiques.</li>
-  <li><strong>Opérateur d'assemblage, alternance</strong> · DIESE TELECOM, Clamart · 09/2023 à 09/2026<br>Montage et câblage (brassage) de composants informatiques, assemblage et configuration d'interphones, gestion du stock et expédition des commandes clients.</li>
-  <li><strong>Assistant informatique, stage</strong> · ROOLE, Boulogne-Billancourt · 12/2022<br>Stage au service DevOps : étapes de mise en service d'une modification sur le serveur client, détection et résolution des problèmes du site.</li>
-</ul>
-
-<h3>Formation</h3>
-<ul>
-  <li><strong>BTS SIO option SISR, en alternance</strong> · ENSITECH, Montigny-le-Bretonneux · 2026 à 2028</li>
-  <li><strong>Baccalauréat professionnel CIEL, en alternance</strong> · AFORP, Cachan · 2023 à 2026</li>
-</ul>
-
-<h3>Compétences et langues</h3>
-<ul>
-  <li>Câblage et brassage, assemblage de matériel, gestion de stock, Pack Office</li>
-  <li>Anglais : niveau B1</li>
-</ul>
 {% assign projets = site.projets | sort: "date" | reverse %}
+<section class="ouverture">
+  <h1>{{ site.title }}</h1>
+  <p class="sous-titre">{{ site.description }}</p>
+</section>
 
-<h2 id="projets">Projets ({{ projets.size }})</h2>
-{% for p in projets %}
-<article class="carte">
-  <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-  <p>{{ p.resume }}</p>
-  <p class="meta">{{ p.date | date: "%m/%Y" }} · {{ p.cadre }}</p>
-</article>
-{% endfor %}
+<section class="profil" aria-labelledby="titre-profil">
+  <div class="profil-texte">
+    <h2 id="titre-profil">Profil</h2>
+    <p>Étudiant en BTS SIO option SISR (solutions d'infrastructure, systèmes et réseaux) en alternance à ENSITECH, je travaille actuellement au support informatique des boutiques Chanel, au rythme de trois jours en entreprise et deux à trois jours à l'école.</p>
+    <p>Avant le BTS, j'ai suivi un baccalauréat professionnel CIEL en alternance, où j'ai pratiqué le câblage, le brassage et l'assemblage de matériel informatique. Je vise un métier d'administrateur systèmes et réseaux.</p>
+  </div>
+  <dl class="fiche">
+    <div><dt>Formation</dt><dd>BTS SIO, option SISR</dd></div>
+    <div><dt>Alternance</dt><dd>Support informatique, boutiques Chanel</dd></div>
+    <div><dt>Rythme</dt><dd>3 jours en entreprise, 2 à 3 jours à l'école</dd></div>
+    <div><dt>Langues</dt><dd>Français, anglais B1</dd></div>
+    <div><dt>Contact</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd></div>
+  </dl>
+</section>
 
-<h2 id="competences">Compétences du bloc 1</h2>
-<p>Chaque croix renvoie au projet qui la prouve. Le tableau se remplit tout seul à chaque projet ajouté.</p>
-<div class="defile">
-<table>
-  <thead>
-    <tr><th scope="col">Compétence</th>{% for p in projets %}<th scope="col"><a href="{{ p.url | relative_url }}">P{{ forloop.rindex }}</a></th>{% endfor %}</tr>
-  </thead>
-  <tbody>
-  {% for c in site.data.competences %}
-    <tr><th scope="row">{{ c.libelle }}</th>{% for p in projets %}<td class="case">{% if p.competences contains c.code %}<a href="{{ p.url | relative_url }}" aria-label="{{ c.libelle }} : {{ p.title }}">X</a>{% endif %}</td>{% endfor %}</tr>
+<section aria-labelledby="parcours">
+  <h2 id="parcours">Parcours</h2>
+  <ol class="frise">
+    <li>
+      <p class="frise-date">Depuis 09/2026</p>
+      <h3>Support informatique, alternance</h3>
+      <p class="frise-lieu">Chanel, boutiques</p>
+      <p>Assistance informatique aux équipes des boutiques.</p>
+    </li>
+    <li>
+      <p class="frise-date">2026 à 2028</p>
+      <h3>BTS SIO option SISR, en alternance</h3>
+      <p class="frise-lieu">ENSITECH, Montigny-le-Bretonneux</p>
+    </li>
+    <li>
+      <p class="frise-date">09/2023 à 09/2026</p>
+      <h3>Opérateur d'assemblage, alternance</h3>
+      <p class="frise-lieu">DIESE TELECOM, Clamart</p>
+      <p>Montage et câblage (brassage) de composants informatiques, assemblage et configuration d'interphones, gestion du stock et expédition des commandes clients.</p>
+    </li>
+    <li>
+      <p class="frise-date">2023 à 2026</p>
+      <h3>Baccalauréat professionnel CIEL, en alternance</h3>
+      <p class="frise-lieu">AFORP, Cachan</p>
+    </li>
+    <li>
+      <p class="frise-date">12/2022</p>
+      <h3>Assistant informatique, stage</h3>
+      <p class="frise-lieu">ROOLE, Boulogne-Billancourt</p>
+      <p>Stage au service DevOps : étapes de mise en service d'une modification sur le serveur client, détection et résolution des problèmes du site.</p>
+    </li>
+  </ol>
+
+  <h3 class="sous-partie">Savoir-faire</h3>
+  <ul class="etiquettes">
+    <li>Câblage et brassage</li>
+    <li>Routage statique Cisco</li>
+    <li>ACL étendues</li>
+    <li>VPN IPsec site à site</li>
+    <li>Packet Tracer</li>
+    <li>Assemblage de matériel</li>
+    <li>Gestion de stock</li>
+    <li>Pack Office</li>
+  </ul>
+</section>
+
+<section aria-labelledby="projets">
+  <h2 id="projets">Projets <span class="compte">{{ projets.size }}</span></h2>
+  <ul class="projets">
+  {% for p in projets %}
+    <li class="projet">
+      <p class="projet-date"><time datetime="{{ p.date | date: '%Y-%m' }}">{{ p.date | date: "%m/%Y" }}</time></p>
+      <div class="projet-corps">
+        <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        <p>{{ p.resume }}</p>
+        <p class="meta">{{ p.cadre }}</p>
+      </div>
+    </li>
   {% endfor %}
-  </tbody>
-</table>
-</div>
+  </ul>
+</section>
+
+<section aria-labelledby="competences">
+  <h2 id="competences">Compétences du bloc 1</h2>
+  <p>Chaque port allumé renvoie au projet qui prouve la compétence. Le tableau se remplit tout seul à chaque projet ajouté.</p>
+  <div class="baie">
+    <div class="defile">
+    <table>
+      <thead>
+        <tr><th scope="col">Compétence</th>{% for p in projets %}<th scope="col"><a href="{{ p.url | relative_url }}" title="{{ p.title }}">P{{ forloop.rindex }}</a></th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+      {% for c in site.data.competences %}
+        <tr><th scope="row">{{ c.libelle }}</th>{% for p in projets %}<td class="case">{% if p.competences contains c.code %}<a class="port actif" href="{{ p.url | relative_url }}" aria-label="{{ c.libelle }} : {{ p.title }}"></a>{% else %}<span class="port" aria-hidden="true"></span>{% endif %}</td>{% endfor %}</tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>

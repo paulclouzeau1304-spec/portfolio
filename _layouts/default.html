@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.resume | default: site.description }}">
+  <meta name="theme-color" content="#17212b">
   <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 </head>
 <body>
-  <header>
+  <a class="evitement" href="#contenu">Aller au contenu</a>
+  <div class="cable" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <header class="entete">
     <p class="site"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
     <nav aria-label="Menu principal">
       <ul>
+        <li><a href="{{ '/' | relative_url }}#parcours">Parcours</a></li>
         <li><a href="{{ '/' | relative_url }}#projets">Projets</a></li>
         <li><a href="{{ '/' | relative_url }}#competences">Compétences</a></li>
         <li><a href="{{ '/mentions-legales/' | relative_url }}">Mentions légales</a></li>
@@ -19,12 +23,13 @@
     </nav>
   </header>
 
-  <main>
+  <main id="contenu">
 {{ content }}
   </main>
 
-  <footer>
-    <p>{% if site.email != "" %}<a href="mailto:{{ site.email }}">{{ site.email }}</a> · {% endif %}{% if site.linkedin != "" %}<a href="{{ site.linkedin }}">LinkedIn</a> · {% endif %}contenu sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a> · <a href="{{ '/mentions-legales/' | relative_url }}">mentions légales</a></p>
+  <footer class="pied">
+    <p>{% if site.email != "" %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}{% if site.linkedin != "" %} <a href="{{ site.linkedin }}">LinkedIn</a>{% endif %}</p>
+    <p>Contenu sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>. <a href="{{ '/mentions-legales/' | relative_url }}">Mentions légales</a>.</p>
   </footer>
 </body>
 </html>
