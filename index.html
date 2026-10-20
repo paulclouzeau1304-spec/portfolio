@@ -3,8 +3,29 @@ layout: default
 ---
 {% assign projets = site.projets | sort: "date" | reverse %}
 <section class="ouverture">
-  <h1>{{ site.title }}</h1>
-  <p class="sous-titre">{{ site.description }}</p>
+  <svg class="topologie" viewBox="0 0 540 290" aria-hidden="true" focusable="false">
+    <g class="liens">
+      <path class="wan" d="M60 46H270M270 46H480"/>
+      <path d="M60 46V140M60 140L28 236M60 140L98 236M270 46V140M270 140V236M480 46L420 140M480 46L512 140M420 140V236M512 140V236"/>
+    </g>
+    <circle class="paquet" cx="60" cy="46" r="5"/>
+    <g class="routeurs">
+      <circle cx="60" cy="46" r="17"/><circle cx="270" cy="46" r="17"/><circle cx="480" cy="46" r="17"/>
+    </g>
+    <g class="switchs">
+      <rect x="38" y="132" width="44" height="16" rx="2"/><rect x="248" y="132" width="44" height="16" rx="2"/>
+      <rect x="398" y="132" width="44" height="16" rx="2"/><rect x="490" y="132" width="44" height="16" rx="2"/>
+    </g>
+    <g class="postes">
+      <rect x="15" y="228" width="26" height="18" rx="2"/><rect x="85" y="228" width="26" height="18" rx="2"/>
+      <rect x="257" y="228" width="26" height="18" rx="2"/><rect x="407" y="228" width="26" height="18" rx="2"/>
+      <rect x="499" y="228" width="26" height="18" rx="2"/>
+    </g>
+  </svg>
+  <div class="ouverture-texte">
+    <h1>{{ site.title }}</h1>
+    <p class="sous-titre">{{ site.description }}</p>
+  </div>
 </section>
 
 <section class="profil" aria-labelledby="titre-profil">

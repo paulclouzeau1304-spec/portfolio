@@ -31,7 +31,11 @@ html { scroll-padding-top: 1rem; }
 
 body {
   margin: 0;
-  background: var(--fond);
+  overflow-x: clip;
+  /* Façade perforée de baie, très discrète */
+  background:
+    radial-gradient(circle, #d3dae1 1.1px, transparent 1.5px) 0 0 / 16px 16px,
+    var(--fond);
   color: var(--encre);
   font: 1.0625rem/1.65 var(--texte);
 }
@@ -55,7 +59,10 @@ body {
   padding: 0 1.25rem;
 }
 
-/* En-tête */
+/* En-tête et ouverture : la baie, sur toute la largeur */
+.entete, .ouverture {
+  border-image: linear-gradient(var(--baie) 0 0) fill 0 / / 0 100vw;
+}
 .entete {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +73,7 @@ body {
   padding-bottom: 1.1rem;
 }
 .site { margin: 0; font: 600 1.05rem/1.2 var(--titre); }
-.site a { color: var(--encre); text-decoration: none; }
+.site a { color: #fff; text-decoration: none; }
 nav ul {
   list-style: none;
   margin: 0;
@@ -76,8 +83,8 @@ nav ul {
   gap: .25rem 1.4rem;
   font-family: var(--titre);
 }
-nav a { color: var(--acier); text-decoration: none; padding: .2rem 0; }
-nav a:hover { color: var(--bleu); text-decoration: underline; text-underline-offset: .3em; }
+nav a { color: #c3ccd6; text-decoration: none; padding: .2rem 0; }
+nav a:hover { color: #fff; text-decoration: underline; text-underline-offset: .3em; }
 
 /* Titres */
 h1, h2, h3 { font-family: var(--titre); line-height: 1.15; font-weight: 600; }
@@ -99,7 +106,44 @@ p { margin: 0 0 .9rem; }
 .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* Ouverture */
-.ouverture { padding: 3rem 0 1rem; }
+.ouverture {
+  position: relative;
+  min-height: 26rem;
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem 0 3.5rem;
+  color: #fff;
+}
+.ouverture-texte { position: relative; }
+.ouverture h1 { font-size: clamp(2.6rem, 7vw, 4.2rem); }
+.ouverture .sous-titre { max-width: 32rem; }
+.ouverture .sous-titre { color: #b9c4cf; }
+
+/* Le réseau du projet, dessiné derrière le nom */
+.topologie {
+  position: absolute;
+  right: 0;
+  top: 1.25rem;
+  width: min(25rem, 48%);
+  height: auto;
+  overflow: visible;
+}
+.topologie .liens { fill: none; stroke: #3d4b59; stroke-width: 2; }
+.topologie .wan { stroke: #5a6b7c; stroke-dasharray: 7 6; }
+.topologie .routeurs circle { fill: #263240; stroke: #6f8296; stroke-width: 2; }
+.topologie .switchs rect { fill: #263240; stroke: #5a6b7c; stroke-width: 2; }
+.topologie .postes rect { fill: #1f2933; stroke: #4a5a6a; stroke-width: 2; }
+.topologie .paquet { fill: var(--orange); animation: tunnel 6s ease-in-out infinite; }
+@keyframes tunnel {
+  0%, 8% { transform: translateX(0); opacity: 0; }
+  14% { opacity: 1; }
+  45%, 55% { transform: translateX(210px); opacity: 1; }
+  86% { opacity: 1; }
+  92%, 100% { transform: translateX(420px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topologie .paquet { animation: none; opacity: 0; }
+}
 
 /* Profil : texte à gauche, fiche à droite */
 .profil { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 2.5rem; align-items: start; }
@@ -292,6 +336,8 @@ pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
 /* Téléphone */
 @media (max-width: 720px) {
   body { font-size: 1rem; }
+  .topologie { width: 100%; opacity: .4; top: 1rem; }
+  .ouverture { min-height: 18rem; }
   .profil { grid-template-columns: 1fr; gap: 0; }
   .fiche { margin-top: .5rem; }
   .frise li { grid-template-columns: 1fr; padding-left: 1.6rem; }
@@ -305,6 +351,8 @@ pre code { background: none; padding: 0; color: inherit; font-size: .88rem; }
 }
 
 @media print {
-  .cable, nav, .evitement { display: none; }
+  .cable, nav, .evitement, .topologie { display: none; }
+  .entete, .ouverture { border-image: none; color: var(--encre); }
+  .site a, .ouverture .sous-titre { color: var(--encre); }
   body { background: #fff; }
 }
